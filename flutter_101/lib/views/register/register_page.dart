@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_101/views/login/login_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class RegisterPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          _buildSaveButton(),
+          _buildSaveButton(context),
         ],
       ),
     );
@@ -104,11 +106,9 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        print('kaydet');
-      },
+      onTap: () => _saveButtonOnTap(context),
       child: Container(
         height: 40,
         decoration: BoxDecoration(color: Colors.indigo.shade900, borderRadius: BorderRadius.circular(5)),
@@ -123,5 +123,24 @@ class RegisterPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _saveButtonOnTap(BuildContext context) {
+    if (_studentNumberController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        (route) => false,
+      );
+    } else {
+      Fluttertoast.showToast(
+          msg: "Boş alan bırakmayınız.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 }

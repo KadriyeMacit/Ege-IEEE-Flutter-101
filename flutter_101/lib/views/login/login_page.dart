@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_101/views/home/home_page.dart';
 import 'package:flutter_101/views/register/register_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -38,7 +39,7 @@ class LoginPage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          _buildLoginButton(),
+          _buildLoginButton(context),
           const SizedBox(
             height: 5,
           ),
@@ -59,11 +60,11 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(
-        onPressed: _loginOnTap,
+        onPressed: () => _loginOnTap(context),
         child: const Text('Giriş yap'),
         style: ElevatedButton.styleFrom(
           primary: Colors.indigo.shade900,
@@ -142,20 +143,15 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _loginOnTap() {
-    print('Giriş yap butonu');
-    print(_studentNumberController.text);
+  void _loginOnTap(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+      (route) => false,
+    );
   }
 
   void _registerOnTap(BuildContext context) {
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => const RegisterPage(),
-    //   ),
-    //   (route) => false,
-    // );
-
     Navigator.push(
       context,
       MaterialPageRoute(
